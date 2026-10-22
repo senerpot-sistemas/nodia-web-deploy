@@ -69,9 +69,52 @@
     });
   }
 
+  function iniciarRevelado() {
+    var selectorBloques = [
+      '.encabezado-seccion',
+      '.subhero > .contenedor > *',
+      '.bento-servicios > *',
+      '.galeria-grid > *',
+      '.grid-proceso > *',
+      '.cotizador-intro',
+      '.cotizador form',
+      '.cta-final',
+      '.ficha-servicio',
+      '.valores-grid > *',
+      '.grid-confianza > *',
+      '.info-contacto .info-item',
+      '.contacto-grid > form'
+    ].join(',');
+
+    var elementos = document.querySelectorAll(selectorBloques);
+    if (!elementos.length) return;
+
+    var prefiereMenosMovimiento = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefiereMenosMovimiento || !('IntersectionObserver' in window)) return;
+
+    elementos.forEach(function (el) {
+      el.classList.add('reveal');
+      var indice = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+      el.style.transitionDelay = (Math.min(indice, 5) * 0.07) + 's';
+    });
+
+    var observador = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (entrada) {
+        if (entrada.isIntersecting) {
+          entrada.target.classList.add('is-visible');
+          observador.unobserve(entrada.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    elementos.forEach(function (el) { observador.observe(el); });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     iniciarNavMovil();
     marcarAnioFooter();
     iniciarCotizador();
+    iniciarRevelado();
   });
 })();

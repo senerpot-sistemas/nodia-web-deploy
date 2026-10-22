@@ -827,3 +827,29 @@ textarea:focus-visible {
   border-radius: 0 0 8px 0;
 }
 .skip-link:focus { left: 0; }
+
+/* ---------- Movimiento: revelado al hacer scroll ---------- */
+/* La clase .reveal solo la agrega main.js (si JS falla, todo queda visible) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Movimiento: entrada del hero al cargar ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-entrada {
+    animation: nodiaFadeUp .7s ease both;
+  }
+  .hero-entrada--retraso {
+    animation-delay: .15s;
+  }
+}
+@keyframes nodiaFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
