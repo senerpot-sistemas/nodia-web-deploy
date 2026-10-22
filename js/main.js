@@ -88,10 +88,7 @@
 
     var elementos = document.querySelectorAll(selectorBloques);
     if (!elementos.length) return;
-
-    var prefiereMenosMovimiento = window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefiereMenosMovimiento || !('IntersectionObserver' in window)) return;
+    if (!('IntersectionObserver' in window)) return;
 
     elementos.forEach(function (el) {
       el.classList.add('reveal');
