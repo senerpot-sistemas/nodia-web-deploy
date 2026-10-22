@@ -103,7 +103,7 @@
           observador.unobserve(entrada.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -120px 0px' });
 
     elementos.forEach(function (el) { observador.observe(el); });
   }
