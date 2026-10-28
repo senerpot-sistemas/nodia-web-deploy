@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;NODIA;;;
+FN:NODIA - Energía, Potencia y Mantenimiento
+ORG:NODIA SAS
+TEL;TYPE=CELL,VOICE:+573011482343
+EMAIL:info@nodia.com.co
+URL:https://nodia.com.co
+ADR;TYPE=WORK:;;Barranquilla;Atlántico;;;Colombia
+NOTE:Ingeniería eléctrica y mantenimiento industrial. Subestaciones, transformadores, RETIE, energía solar.
+END:VCARD
