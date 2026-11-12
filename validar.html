@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Validación documental — NODIA S.A.S.</title>
+<link rel="icon" type="image/png" href="img/logo/favicon-32.png">
+<link rel="stylesheet" href="css/fonts.css">
+<style>
+  :root { --azul:#0B3D62; --tec:#0077B6; --verde:#6DBE45; --ok:#4C9F2E; --gris:#374151; --borde:#D5DCE6; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Source Sans 3','Segoe UI',Arial,sans-serif; background:#F3F5F9; color:var(--gris); min-height:100vh; }
+  header { background:var(--azul); padding:16px 20px; }
+  header img { height:34px; display:block; }
+  main { max-width:640px; margin:24px auto 40px; padding:0 16px; }
+  h1 { font-family:'Montserrat',Arial,sans-serif; font-size:20px; color:var(--azul); margin-bottom:4px; }
+  .sub { font-size:14px; color:#5B6675; margin-bottom:18px; }
+  .tarjeta { background:#fff; border:1px solid var(--borde); border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(11,61,98,.08); }
+  .estado { padding:18px 20px; display:flex; gap:14px; align-items:center; }
+  .estado .icono { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; color:#fff; flex-shrink:0; }
+  .estado h2 { font-family:'Montserrat',Arial,sans-serif; font-size:17px; line-height:1.2; }
+  .estado p { font-size:14px; margin-top:3px; }
+  .e-VIGENTE { background:#EAF5E4; } .e-VIGENTE .icono { background:var(--ok); } .e-VIGENTE h2 { color:#2F6F1B; }
+  .e-VENCIDO, .e-SIN_VIGENCIA_DEFINIDA { background:#FEF3C7; } .e-VENCIDO .icono, .e-SIN_VIGENCIA_DEFINIDA .icono { background:#D97706; } .e-VENCIDO h2, .e-SIN_VIGENCIA_DEFINIDA h2 { color:#92400E; }
+  .e-REEMPLAZADO { background:#FFEDD5; } .e-REEMPLAZADO .icono { background:#EA580C; } .e-REEMPLAZADO h2 { color:#9A3412; }
+  .e-ANULADO, .e-NO_ENCONTRADO, .e-NO_VALIDO, .e-LIMITE, .e-ERROR { background:#FEE2E2; } .e-ANULADO .icono, .e-NO_ENCONTRADO .icono, .e-NO_VALIDO .icono, .e-LIMITE .icono, .e-ERROR .icono { background:#DC2626; } .e-ANULADO h2, .e-NO_ENCONTRADO h2, .e-NO_VALIDO h2, .e-LIMITE h2, .e-ERROR h2 { color:#991B1B; }
+  .e-MUESTRA { background:#E5E7EB; } .e-MUESTRA .icono { background:#6B7280; } .e-MUESTRA h2 { color:#374151; }
+  .e-CARGANDO { background:#EEF2F7; } .e-CARGANDO .icono { background:var(--tec); }
+  dl { padding:6px 20px 14px; display:grid; grid-template-columns:150px 1fr; row-gap:9px; column-gap:10px; font-size:14px; }
+  dt { color:#5B6675; } dd { font-weight:600; color:var(--azul); word-break:break-word; }
+  .huella { padding:14px 20px 18px; border-top:1px solid var(--borde); font-size:13px; }
+  .huella label { display:block; font-weight:700; color:var(--azul); margin-bottom:4px; }
+  .huella input[type=file] { font-size:13px; max-width:100%; }
+  .huella .res { margin-top:8px; font-weight:600; }
+  .nota { font-size:12.5px; color:#5B6675; margin-top:14px; line-height:1.4; }
+  code { font-size:11.5px; word-break:break-all; background:#F3F5F9; padding:1px 4px; border-radius:3px; }
+</style>
+</head>
+<body>
+<header><img src="img/logo/nodia-logo-blanco.png" alt="NODIA"></header>
+<main>
+  <h1>Validación documental</h1>
+  <div class="sub">NODIA S.A.S. · Energía · Potencia · Mantenimiento</div>
+  <div class="tarjeta" id="tarjeta"><div class="estado e-CARGANDO"><div class="icono">…</div><div><h2>Consultando el registro</h2><p>Un momento, por favor.</p></div></div></div>
+  <p class="nota" id="nota"></p>
+</main>
+<!-- Configuración de la consulta: en nodia.com.co se publica con la URL y la clave del servicio de documentos -->
+<script src="validar-config.js"></script>
+<script>
+(function () {
+  var C = window.NODIA_VALIDAR_CONFIG || {}, tarjeta = document.getElementById('tarjeta'), nota = document.getElementById('nota');
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fecha(s) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ''); return m ? m[3] + '/' + m[2] + '/' + m[1] : (s || '—'); }
+  var TITULOS = { VIGENTE: 'Documento vigente', VENCIDO: 'Documento vencido', REEMPLAZADO: 'Documento reemplazado', ANULADO: 'Documento anulado', MUESTRA: 'Documento de muestra', SIN_VIGENCIA_DEFINIDA: 'Vigencia no definida',
+    NO_ENCONTRADO: 'Documento no encontrado', NO_VALIDO: 'Registro incompleto', LIMITE: 'Demasiadas consultas', ERROR: 'No se pudo confirmar' };
+  var ICONOS = { VIGENTE: '✓', VENCIDO: '!', REEMPLAZADO: '!', ANULADO: '✕', MUESTRA: 'i', SIN_VIGENCIA_DEFINIDA: '!', NO_ENCONTRADO: '✕', NO_VALIDO: '✕', LIMITE: '!', ERROR: '?' };
+  function pintar(estado, mensaje, datos) {
+    var h = '<div class="estado e-' + estado + '"><div class="icono">' + (ICONOS[estado] || '?') + '</div><div><h2>' + esc(TITULOS[estado] || estado) + '</h2><p>' + esc(mensaje) + '</p></div></div>';
+    if (datos && datos.encontrado) {
+      h += '<dl><dt>Código</dt><dd>' + esc(datos.codigo) + '</dd><dt>Tipo de documento</dt><dd>' + esc(datos.tipo) + '</dd><dt>Cliente</dt><dd>' + esc(datos.cliente) + '</dd>' +
+        '<dt>Versión</dt><dd>' + esc(datos.version) + '</dd><dt>Fecha de emisión</dt><dd>' + esc(fecha(datos.emision)) + '</dd><dt>Vigente hasta</dt><dd>' + esc(fecha(datos.vigenciaHasta)) + '</dd></dl>';
+      if (datos.huellaPdf) h += '<div class="huella"><label for="archivo">¿Tiene el archivo PDF? Compruebe que no fue alterado</label><input type="file" id="archivo" accept="application/pdf"><div class="res" id="resultado-huella"></div></div>';
+    }
+    tarjeta.innerHTML = h;
+    var inp = document.getElementById('archivo'); if (inp) inp.addEventListener('change', function () { comprobarArchivo(inp.files[0], datos.huellaPdf); });
+  }
+  function comprobarArchivo(f, esperada) {
+    var out = document.getElementById('resultado-huella'); if (!f) return; out.textContent = 'Calculando…';
+    f.arrayBuffer().then(function (b) { return crypto.subtle.digest('SHA-256', b); }).then(function (d) {
+      var hex = Array.prototype.map.call(new Uint8Array(d), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+      out.innerHTML = hex === esperada ? '<span style="color:var(--ok)">✓ El archivo coincide exactamente con el registrado.</span>' : '<span style="color:#B91C1C">✕ El archivo NO coincide con el registrado: fue modificado o es otro documento.</span>';
+    }).catch(function () { out.textContent = 'Este navegador no permite calcular la huella.'; });
+  }
+  var token = (new URLSearchParams(location.search).get('c') || '').trim().toLowerCase();
+  if (!/^[0-9a-f]{32}$/.test(token)) { pintar('NO_ENCONTRADO', 'El enlace no contiene un código de validación válido. Escanee de nuevo el QR del documento.'); return; }
+  if (!C.apiUrl || !C.apiKey) { pintar('ERROR', 'El servicio de validación no está configurado.'); return; }
+  // La consulta se reintenta (el servicio de Google puede tardar o fallar de forma intermitente). Si no se logra confirmar, NO se muestra
+  // ningún estado de autenticidad: se informa que no se pudo confirmar.
+  var url = C.apiUrl + '?action=verificarDocumento&params=' + encodeURIComponent(JSON.stringify({ c: token })) + '&key=' + encodeURIComponent(C.apiKey);
+  function intentar(n) {
+    var ctrl = new AbortController(), t = setTimeout(function () { ctrl.abort(); }, 25000);
+    fetch(url, { redirect: 'follow', signal: ctrl.signal }).then(function (r) { if (r.status >= 400) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) { clearTimeout(t); if (!j || !j.ok || !j.data) throw new Error('respuesta inesperada'); var d = j.data; pintar(d.estado, d.mensaje, d); })
+      .catch(function () { clearTimeout(t); if (n < 3) { setTimeout(function () { intentar(n + 1); }, 1500 * n); } else { pintar('ERROR', 'No fue posible consultar el registro en este momento. Esto NO significa que el documento sea falso ni válido: intente de nuevo en unos minutos.'); } });
+  }
+  intentar(1);
+  nota.textContent = 'Esta página muestra únicamente el estado y los datos de identificación del documento. No se publican montos, ítems ni datos de contacto. Compare el código y la versión con los impresos en su copia.';
+})();
+</script>
+</body>
+</html>
