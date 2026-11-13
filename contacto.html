@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contacto | NODIA — Ingeniería Eléctrica y Mantenimiento</title>
+<title>Contacto | NODIA — Mantenimiento Eléctrico y Energía Solar</title>
 <meta name="description" content="Solicita asesoría técnica, una cotización o el agendamiento de una visita técnica con NODIA. WhatsApp, correo y teléfono directo.">
 <link rel="canonical" href="https://nodia.com.co/contacto.html">
 <meta property="og:type" content="website">
@@ -13,8 +13,29 @@
 <link rel="icon" href="img/logo/favicon-32.png" type="image/png">
 <link rel="icon" href="img/logo/favicon-64.png" sizes="64x64" type="image/png">
 <link rel="apple-touch-icon" href="img/logo/favicon-180.png">
+<style>html{background:#0B3D62}</style>
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/styles.css?v=2">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "NODIA",
+  "legalName": "SENERPOT SAS",
+  "url": "https://nodia.com.co/",
+  "image": "https://nodia.com.co/img/logo/nodia-symbol.png",
+  "telephone": "+57-301-1482343",
+  "email": "info@nodia.com.co",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Barranquilla",
+    "addressRegion": "Atlántico",
+    "addressCountry": "CO"
+  },
+  "areaServed": "Región Caribe, Colombia",
+  "sameAs": []
+}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -31,7 +52,13 @@
     <nav class="nav-principal" data-nav-principal aria-label="Navegación principal">
       <ul>
         <li><a href="index.html">Inicio</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
+        <li class="nav-tiene-submenu">
+          <a href="servicios.html" aria-haspopup="true">Servicios</a>
+          <ul class="submenu">
+            <li><a href="energia-solar.html">Energía Solar Fotovoltaica</a></li>
+            <li><a href="mantenimiento.html">Mantenimiento Eléctrico</a></li>
+          </ul>
+        </li>
         <li><a href="proyectos.html">Proyectos</a></li>
         <li><a href="nosotros.html">Nosotros</a></li>
         <li><a href="contacto.html" aria-current="page">Contacto</a></li>
@@ -90,43 +117,74 @@
           </div>
         </div>
 
-        <form data-form-cotizador novalidate style="background:#fff; border:1px solid var(--gris-claro); border-radius:var(--radio); padding:32px;">
+        <form data-form-cotizador novalidate data-division-defecto-param="division" style="background:#fff; border:1px solid var(--gris-claro); border-radius:var(--radio); padding:32px;">
           <h2 style="font-size:1.2rem; margin-bottom:18px;">Solicita tu cotización</h2>
-          <div class="campo">
-            <label for="cot-servicio">Servicio de interés</label>
-            <select id="cot-servicio" name="servicio" required>
-              <option value="" selected disabled>Selecciona un servicio</option>
-              <option>Mantenimiento de Subestaciones</option>
-              <option>Pruebas Eléctricas a Transformadores</option>
-              <option>Calidad de la Energía</option>
-              <option>Análisis de Aceite Dieléctrico</option>
-              <option>Puesta a Tierra y Pararrayos</option>
-              <option>Tableros Eléctricos</option>
-              <option>Gestión ante el Operador de Red</option>
-              <option>Mantenimiento Eléctrico General</option>
-              <option>Energía Solar Fotovoltaica</option>
-              <option>Otro / No estoy seguro</option>
-            </select>
+
+          <p class="campo-label-grupo">¿Qué necesitas?</p>
+          <div class="selector-division" role="group" aria-label="Elige qué necesitas">
+            <button type="button" class="btn btn--contorno" data-division-btn data-division="solar" aria-pressed="false">Energía Solar</button>
+            <button type="button" class="btn btn--contorno" data-division-btn data-division="mantenimiento" aria-pressed="false">Mantenimiento</button>
           </div>
+
+          <div class="campos-division" data-campos="solar" hidden>
+            <div class="campo">
+              <label for="cot-solar-ubicacion">Ubicación del proyecto</label>
+              <input type="text" id="cot-solar-ubicacion" name="ubicacion" autocomplete="address-level2">
+            </div>
+            <div class="campo">
+              <label for="cot-solar-inmueble">Tipo de inmueble</label>
+              <select id="cot-solar-inmueble" name="inmueble">
+                <option value="" selected disabled>Selecciona</option>
+                <option>Residencial</option>
+                <option>Comercial</option>
+                <option>Industrial</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="cot-solar-necesidad">Necesidad energética</label>
+              <input type="text" id="cot-solar-necesidad" name="necesidad" placeholder="Ej: reducir el consumo de la fábrica">
+            </div>
+          </div>
+
+          <div class="campos-division" data-campos="mantenimiento" hidden>
+            <div class="campo">
+              <label for="cot-mant-equipo">Tipo de equipo o instalación</label>
+              <select id="cot-mant-equipo" name="equipo">
+                <option value="" selected disabled>Selecciona</option>
+                <option>Subestación</option>
+                <option>Transformador</option>
+                <option>Tableros eléctricos</option>
+                <option>Puesta a tierra</option>
+                <option>Instalación eléctrica general</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="cot-mant-servicio">Servicio requerido</label>
+              <select id="cot-mant-servicio" name="servicio">
+                <option value="" selected disabled>Selecciona</option>
+                <option>Mantenimiento preventivo</option>
+                <option>Mantenimiento correctivo</option>
+                <option>Pruebas eléctricas</option>
+                <option>Diagnóstico / No estoy seguro</option>
+              </select>
+            </div>
+          </div>
+
           <div class="campo">
             <label for="cot-nombre">Nombre / Cargo</label>
             <input type="text" id="cot-nombre" name="nombre" required autocomplete="name">
           </div>
-          <div class="campo">
-            <label for="cot-empresa">Empresa (opcional)</label>
-            <input type="text" id="cot-empresa" name="empresa" autocomplete="organization">
-          </div>
-          <div class="campo">
-            <label for="cot-ciudad">Ciudad (opcional)</label>
-            <input type="text" id="cot-ciudad" name="ciudad" autocomplete="address-level2">
-          </div>
-          <div class="campo">
-            <label for="cot-detalle">Detalle del requerimiento (opcional)</label>
-            <textarea id="cot-detalle" name="detalle"></textarea>
-          </div>
+
           <button type="submit" class="btn btn--primario btn--bloque">Enviar solicitud por WhatsApp</button>
           <p class="form-mensaje" data-form-mensaje></p>
           <p class="campo-ayuda">Se abrirá WhatsApp con tu mensaje redactado. También puedes escribirnos directamente a <a href="mailto:info@nodia.com.co">info@nodia.com.co</a>.</p>
+
+          <noscript>
+            <p class="campo-ayuda">Si el formulario no responde, escríbenos directo por WhatsApp:</p>
+            <a class="btn btn--contorno btn--bloque" style="margin-bottom:8px;" href="https://wa.me/573011482343?text=Hola%20NODIA%2C%20quiero%20informaci%C3%B3n%20sobre%20Energ%C3%ADa%20Solar.">Energía Solar →</a>
+            <a class="btn btn--contorno btn--bloque" href="https://wa.me/573011482343?text=Hola%20NODIA%2C%20quiero%20informaci%C3%B3n%20sobre%20Mantenimiento%20El%C3%A9ctrico.">Mantenimiento Eléctrico →</a>
+          </noscript>
         </form>
 
       </div>
@@ -143,7 +201,7 @@
           <img src="img/logo/nodia-symbol.png" alt="" class="marca-icono">
           <span class="marca-texto" style="font-size:1.2rem;">NODIA</span>
         </a>
-        <p>Ingeniería eléctrica y mantenimiento industrial. Cobertura Región Caribe con proyección nacional.</p>
+        <p>Ingeniería eléctrica, mantenimiento y energía solar. Cobertura Región Caribe con proyección nacional.</p>
       </div>
       <div>
         <h4>Navegación</h4>
@@ -155,11 +213,10 @@
         </ul>
       </div>
       <div>
-        <h4>Servicios</h4>
+        <h4>Especialidades</h4>
         <ul>
-          <li><a href="servicios.html#subestaciones">Subestaciones</a></li>
-          <li><a href="servicios.html#transformadores">Transformadores</a></li>
-          <li><a href="servicios.html#energia-solar">Energía solar</a></li>
+          <li><a href="energia-solar.html">Energía Solar Fotovoltaica</a></li>
+          <li><a href="mantenimiento.html">Mantenimiento Eléctrico</a></li>
         </ul>
       </div>
       <div>

@@ -209,6 +209,41 @@ textarea:focus-visible {
   border-color: var(--verde-energia);
 }
 
+.nav-tiene-submenu { position: relative; }
+.nav-tiene-submenu .submenu {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 240px;
+  background: #fff;
+  border-radius: var(--radio-sm);
+  box-shadow: var(--sombra);
+  padding: 8px;
+  margin-top: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+  z-index: 50;
+}
+.nav-tiene-submenu:hover .submenu,
+.nav-tiene-submenu:focus-within .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.submenu li { border: none !important; }
+.submenu a {
+  display: block;
+  padding: 10px 12px;
+  font-size: .9rem;
+  border-bottom: none;
+  border-radius: var(--radio-sm);
+  white-space: nowrap;
+}
+.submenu a:hover { background: var(--gris-claro); border-color: transparent; }
+
 .nav-toggle {
   display: none;
   background: none;
@@ -256,6 +291,21 @@ textarea:focus-visible {
   .nav-principal a:hover,
   .nav-principal a[aria-current="page"] { color: var(--verde-energia); }
   .nav-principal .btn { align-self: stretch; text-align: center; margin-top: 8px; }
+
+  .nav-tiene-submenu .submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0 0 0 18px;
+    margin-top: 0;
+  }
+  .submenu a { color: #C7D3DC; font-size: 1.1rem; font-weight: 600; padding: 10px 2px; }
+  .submenu a:hover,
+  .submenu a[aria-current="page"] { color: var(--verde-energia); }
+  .submenu li { border-bottom: none !important; }
 }
 
 /* ---------- Hero ---------- */
@@ -691,6 +741,45 @@ textarea:focus-visible {
 }
 .wa-flotante svg { width: 28px; height: 28px; }
 
+/* ---------- Nosotros: introducción con fotografía ---------- */
+.nosotros-intro {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .nosotros-intro { grid-template-columns: 1fr; }
+}
+
+/* ---------- Fotografía editorial de una sola pieza (banda ancha) ---------- */
+.foto-editorial {
+  aspect-ratio: 21 / 9;
+}
+@media (max-width: 700px) {
+  .foto-editorial { aspect-ratio: 4 / 3; }
+}
+
+/* ---------- Proyectos: agrupación editorial por tipo de trabajo ---------- */
+.grupo-proyecto { margin-bottom: 64px; }
+.grupo-proyecto:last-child { margin-bottom: 0; }
+.encabezado-seccion--sub { margin-bottom: 28px; }
+
+.mosaico-proyecto { display: grid; gap: 20px; }
+.mosaico-proyecto .bento-foto { grid-column: auto; min-height: 300px; }
+.mosaico-proyecto .bento-foto figcaption { margin: 0; }
+.mosaico-proyecto--2 { grid-template-columns: 2fr 1fr; }
+.mosaico-proyecto--3 { grid-template-columns: 2fr 1fr 1fr; }
+.mosaico-proyecto--1 .bento-foto { min-height: 380px; }
+.mosaico-proyecto--2 > :first-child h3,
+.mosaico-proyecto--3 > :first-child h3 { font-size: 1.25rem; }
+
+@media (max-width: 860px) {
+  .mosaico-proyecto--2,
+  .mosaico-proyecto--3 { grid-template-columns: 1fr; }
+  .mosaico-proyecto .bento-foto { min-height: 260px; }
+}
+
 /* ---------- Galeria de proyectos (trabajo real) ---------- */
 .galeria-grid {
   display: grid;
@@ -793,10 +882,22 @@ textarea:focus-visible {
   gap: 24px;
 }
 @media (max-width: 700px) { .valores-grid { grid-template-columns: 1fr; } }
+.valores-grid--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .valores-grid--3 { grid-template-columns: 1fr; } }
 .valor-card {
   background: var(--gris-claro);
   border-radius: var(--radio);
   padding: 28px;
+}
+.valor-card .icono-servicio {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  color: var(--azul-tecnico);
+  margin-bottom: 14px;
 }
 .valor-card h3 { font-size: 1.05rem; }
 
@@ -905,4 +1006,151 @@ textarea:focus-visible {
     animation-duration: .01s;
     animation-delay: 0s;
   }
+}
+
+/* ---------- Selector de especialidades (divisiones) ---------- */
+.divisiones-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 861px) {
+  .divisiones-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+.division-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra-sm);
+  background: #fff;
+  text-decoration: none;
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+.division-card:hover { box-shadow: var(--sombra); transform: translateY(-3px); }
+.division-card:focus-visible { outline: 2px solid var(--verde-energia); outline-offset: 3px; }
+
+.division-card__media { position: relative; aspect-ratio: 5/4; overflow: hidden; }
+.division-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s ease;
+}
+.division-card:hover .division-card__media img { transform: scale(1.03); }
+.division-card__numero {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1;
+  color: rgba(255, 255, 255, .88);
+  text-shadow: 0 2px 20px rgba(6, 38, 63, .45);
+  pointer-events: none;
+}
+
+.division-card__texto {
+  position: relative;
+  padding: 28px 26px 26px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.division-card__texto::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 26px;
+  bottom: 26px;
+  width: 4px;
+}
+.division-card--solar .division-card__texto::before { background: var(--verde-energia); }
+.division-card--mantenimiento .division-card__texto::before { background: var(--azul-tecnico); }
+.division-card__texto h3 {
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  font-size: 1.55rem;
+  letter-spacing: -.01em;
+  color: var(--azul-nodia);
+  margin: 0;
+}
+.division-card__texto p { color: var(--gris-medio); font-size: .97rem; margin: 0; max-width: 42ch; }
+.division-card .ver-mas {
+  margin-top: 8px;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: .92rem;
+  color: var(--azul-tecnico);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+@media (max-width: 560px) {
+  .division-card__media { aspect-ratio: 16/10; }
+  .division-card__numero { font-size: 3rem; }
+}
+
+/* ---------- Cotizador contextual por división ---------- */
+.campo-label-grupo {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: .85rem;
+  color: var(--azul-nodia);
+  margin: 4px 0 8px;
+}
+.selector-division { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.selector-division .btn[aria-pressed="true"] {
+  background: var(--azul-nodia);
+  color: #fff;
+  border-color: var(--azul-nodia);
+}
+.campos-division[hidden] { display: none; }
+
+/* ---------- Índice de servicios (hub de Servicios) ---------- */
+.indice-division h2 { font-size: 1.3rem; color: var(--azul-nodia); margin-bottom: 14px; }
+.lista-indice-servicios {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lista-indice-servicios li { border-bottom: 1px solid var(--gris-claro); }
+.lista-indice-servicios a {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 14px 4px;
+  text-decoration: none;
+}
+.lista-indice-servicios strong {
+  color: var(--azul-nodia);
+  font-family: var(--fuente-titulos);
+  font-size: 1rem;
+  flex: 0 0 auto;
+}
+.lista-indice-servicios span { color: var(--gris-medio); font-size: .92rem; flex: 1 1 260px; }
+.lista-indice-servicios em {
+  font-style: normal;
+  color: var(--azul-tecnico);
+  font-weight: 700;
+  font-size: .85rem;
+  white-space: nowrap;
+}
+.lista-indice-servicios a:hover strong,
+.lista-indice-servicios a:focus-visible strong { color: var(--azul-tecnico); }
+.lista-indice-servicios a:focus-visible {
+  outline: 2px solid var(--verde-energia);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+@media (max-width: 560px) {
+  .lista-indice-servicios a { flex-direction: column; gap: 4px; }
 }
