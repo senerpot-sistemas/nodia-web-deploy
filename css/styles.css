@@ -740,6 +740,34 @@ textarea:focus-visible {
 }
 .wa-flotante svg { width: 28px; height: 28px; }
 
+/* ---------- Fotografía editorial de una sola pieza (banda ancha) ---------- */
+.foto-editorial {
+  aspect-ratio: 21 / 9;
+}
+@media (max-width: 700px) {
+  .foto-editorial { aspect-ratio: 4 / 3; }
+}
+
+/* ---------- Proyectos: agrupación editorial por tipo de trabajo ---------- */
+.grupo-proyecto { margin-bottom: 64px; }
+.grupo-proyecto:last-child { margin-bottom: 0; }
+.encabezado-seccion--sub { margin-bottom: 28px; }
+
+.mosaico-proyecto { display: grid; gap: 20px; }
+.mosaico-proyecto .bento-foto { grid-column: auto; min-height: 300px; }
+.mosaico-proyecto .bento-foto figcaption { margin: 0; }
+.mosaico-proyecto--2 { grid-template-columns: 2fr 1fr; }
+.mosaico-proyecto--3 { grid-template-columns: 2fr 1fr 1fr; }
+.mosaico-proyecto--1 .bento-foto { min-height: 380px; }
+.mosaico-proyecto--2 > :first-child h3,
+.mosaico-proyecto--3 > :first-child h3 { font-size: 1.25rem; }
+
+@media (max-width: 860px) {
+  .mosaico-proyecto--2,
+  .mosaico-proyecto--3 { grid-template-columns: 1fr; }
+  .mosaico-proyecto .bento-foto { min-height: 260px; }
+}
+
 /* ---------- Galeria de proyectos (trabajo real) ---------- */
 .galeria-grid {
   display: grid;
