@@ -740,6 +740,17 @@ textarea:focus-visible {
 }
 .wa-flotante svg { width: 28px; height: 28px; }
 
+/* ---------- Nosotros: introducción con fotografía ---------- */
+.nosotros-intro {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .nosotros-intro { grid-template-columns: 1fr; }
+}
+
 /* ---------- Fotografía editorial de una sola pieza (banda ancha) ---------- */
 .foto-editorial {
   aspect-ratio: 21 / 9;
