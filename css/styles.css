@@ -211,6 +211,7 @@ textarea:focus-visible {
 
 .nav-tiene-submenu { position: relative; }
 .nav-tiene-submenu .submenu {
+  display: block;
   position: absolute;
   top: 100%;
   left: 0;
