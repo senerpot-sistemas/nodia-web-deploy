@@ -842,10 +842,22 @@ textarea:focus-visible {
   gap: 24px;
 }
 @media (max-width: 700px) { .valores-grid { grid-template-columns: 1fr; } }
+.valores-grid--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .valores-grid--3 { grid-template-columns: 1fr; } }
 .valor-card {
   background: var(--gris-claro);
   border-radius: var(--radio);
   padding: 28px;
+}
+.valor-card .icono-servicio {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  color: var(--azul-tecnico);
+  margin-bottom: 14px;
 }
 .valor-card h3 { font-size: 1.05rem; }
 
@@ -975,18 +987,72 @@ textarea:focus-visible {
   box-shadow: var(--sombra-sm);
   background: #fff;
   text-decoration: none;
-  transition: box-shadow .2s ease, transform .2s ease;
+  transition: box-shadow .25s ease, transform .25s ease;
 }
-.division-card:hover { box-shadow: var(--sombra); transform: translateY(-2px); }
+.division-card:hover { box-shadow: var(--sombra); transform: translateY(-3px); }
 .division-card:focus-visible { outline: 2px solid var(--verde-energia); outline-offset: 3px; }
-.division-card img { aspect-ratio: 4/3; width: 100%; object-fit: cover; }
-.division-card__texto { padding: 24px; display: flex; flex-direction: column; gap: 6px; }
-.division-card__etiqueta { font-family: var(--fuente-titulos); font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
-.division-card__texto h3 { font-size: 1.25rem; margin: 2px 0; color: var(--azul-nodia); }
-.division-card__texto p { color: var(--gris-medio); font-size: .95rem; margin: 0; }
-.division-card .ver-mas { margin-top: 10px; font-weight: 700; color: var(--azul-tecnico); font-size: .9rem; }
+
+.division-card__media { position: relative; aspect-ratio: 5/4; overflow: hidden; }
+.division-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s ease;
+}
+.division-card:hover .division-card__media img { transform: scale(1.03); }
+.division-card__numero {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1;
+  color: rgba(255, 255, 255, .88);
+  text-shadow: 0 2px 20px rgba(6, 38, 63, .45);
+  pointer-events: none;
+}
+
+.division-card__texto {
+  position: relative;
+  padding: 28px 26px 26px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.division-card__texto::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 26px;
+  bottom: 26px;
+  width: 4px;
+}
+.division-card--solar .division-card__texto::before { background: var(--verde-energia); }
+.division-card--mantenimiento .division-card__texto::before { background: var(--azul-tecnico); }
+.division-card__texto h3 {
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  font-size: 1.55rem;
+  letter-spacing: -.01em;
+  color: var(--azul-nodia);
+  margin: 0;
+}
+.division-card__texto p { color: var(--gris-medio); font-size: .97rem; margin: 0; max-width: 42ch; }
+.division-card .ver-mas {
+  margin-top: 8px;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: .92rem;
+  color: var(--azul-tecnico);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 @media (max-width: 560px) {
-  .division-card img { aspect-ratio: 16/9; }
+  .division-card__media { aspect-ratio: 16/10; }
+  .division-card__numero { font-size: 3rem; }
 }
 
 /* ---------- Cotizador contextual por división ---------- */
