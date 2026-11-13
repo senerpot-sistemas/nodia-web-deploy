@@ -209,6 +209,40 @@ textarea:focus-visible {
   border-color: var(--verde-energia);
 }
 
+.nav-tiene-submenu { position: relative; }
+.nav-tiene-submenu .submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 240px;
+  background: #fff;
+  border-radius: var(--radio-sm);
+  box-shadow: var(--sombra);
+  padding: 8px;
+  margin-top: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+  z-index: 50;
+}
+.nav-tiene-submenu:hover .submenu,
+.nav-tiene-submenu:focus-within .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.submenu li { border: none !important; }
+.submenu a {
+  display: block;
+  padding: 10px 12px;
+  font-size: .9rem;
+  border-bottom: none;
+  border-radius: var(--radio-sm);
+  white-space: nowrap;
+}
+.submenu a:hover { background: var(--gris-claro); border-color: transparent; }
+
 .nav-toggle {
   display: none;
   background: none;
@@ -256,6 +290,21 @@ textarea:focus-visible {
   .nav-principal a:hover,
   .nav-principal a[aria-current="page"] { color: var(--verde-energia); }
   .nav-principal .btn { align-self: stretch; text-align: center; margin-top: 8px; }
+
+  .nav-tiene-submenu .submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 0 0 0 18px;
+    margin-top: 0;
+  }
+  .submenu a { color: #C7D3DC; font-size: 1.1rem; font-weight: 600; padding: 10px 2px; }
+  .submenu a:hover,
+  .submenu a[aria-current="page"] { color: var(--verde-energia); }
+  .submenu li { border-bottom: none !important; }
 }
 
 /* ---------- Hero ---------- */
@@ -905,4 +954,97 @@ textarea:focus-visible {
     animation-duration: .01s;
     animation-delay: 0s;
   }
+}
+
+/* ---------- Selector de especialidades (divisiones) ---------- */
+.divisiones-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 861px) {
+  .divisiones-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+.division-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra-sm);
+  background: #fff;
+  text-decoration: none;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.division-card:hover { box-shadow: var(--sombra); transform: translateY(-2px); }
+.division-card:focus-visible { outline: 2px solid var(--verde-energia); outline-offset: 3px; }
+.division-card img { aspect-ratio: 4/3; width: 100%; object-fit: cover; }
+.division-card__texto { padding: 24px; display: flex; flex-direction: column; gap: 6px; }
+.division-card__etiqueta { font-family: var(--fuente-titulos); font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
+.division-card__texto h3 { font-size: 1.25rem; margin: 2px 0; color: var(--azul-nodia); }
+.division-card__texto p { color: var(--gris-medio); font-size: .95rem; margin: 0; }
+.division-card .ver-mas { margin-top: 10px; font-weight: 700; color: var(--azul-tecnico); font-size: .9rem; }
+@media (max-width: 560px) {
+  .division-card img { aspect-ratio: 16/9; }
+}
+
+/* ---------- Cotizador contextual por división ---------- */
+.campo-label-grupo {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: .85rem;
+  color: var(--azul-nodia);
+  margin: 4px 0 8px;
+}
+.selector-division { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.selector-division .btn[aria-pressed="true"] {
+  background: var(--azul-nodia);
+  color: #fff;
+  border-color: var(--azul-nodia);
+}
+.campos-division[hidden] { display: none; }
+
+/* ---------- Índice de servicios (hub de Servicios) ---------- */
+.indice-division h2 { font-size: 1.3rem; color: var(--azul-nodia); margin-bottom: 14px; }
+.lista-indice-servicios {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lista-indice-servicios li { border-bottom: 1px solid var(--gris-claro); }
+.lista-indice-servicios a {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 14px 4px;
+  text-decoration: none;
+}
+.lista-indice-servicios strong {
+  color: var(--azul-nodia);
+  font-family: var(--fuente-titulos);
+  font-size: 1rem;
+  flex: 0 0 auto;
+}
+.lista-indice-servicios span { color: var(--gris-medio); font-size: .92rem; flex: 1 1 260px; }
+.lista-indice-servicios em {
+  font-style: normal;
+  color: var(--azul-tecnico);
+  font-weight: 700;
+  font-size: .85rem;
+  white-space: nowrap;
+}
+.lista-indice-servicios a:hover strong,
+.lista-indice-servicios a:focus-visible strong { color: var(--azul-tecnico); }
+.lista-indice-servicios a:focus-visible {
+  outline: 2px solid var(--verde-energia);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+@media (max-width: 560px) {
+  .lista-indice-servicios a { flex-direction: column; gap: 4px; }
 }

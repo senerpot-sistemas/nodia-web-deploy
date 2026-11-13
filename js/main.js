@@ -30,43 +30,102 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
+  var MENSAJES_DIVISION = {
+    solar: function (campos) {
+      var l = ['Hola, soy ' + campos.nombre + '. Necesito información sobre Energía Solar.'];
+      if (campos.ubicacion) l.push('Ubicación del proyecto: ' + campos.ubicacion);
+      if (campos.inmueble) l.push('Tipo de inmueble: ' + campos.inmueble);
+      if (campos.necesidad) l.push('Necesidad energética: ' + campos.necesidad);
+      return l.join('\n');
+    },
+    mantenimiento: function (campos) {
+      var l = ['Hola, soy ' + campos.nombre + '. Necesito mantenimiento eléctrico.'];
+      if (campos.equipo) l.push('Equipo o instalación: ' + campos.equipo);
+      if (campos.servicio) l.push('Servicio requerido: ' + campos.servicio);
+      return l.join('\n');
+    }
+  };
+
   function iniciarCotizador() {
     var formulario = document.querySelector('[data-form-cotizador]');
     if (!formulario) return;
 
     var mensajeError = formulario.querySelector('[data-form-mensaje]');
+    var botonesDivision = formulario.querySelectorAll('[data-division-btn]');
+    var gruposCampos = formulario.querySelectorAll('[data-campos]');
+    var nombre = formulario.querySelector('#cot-nombre');
+    var divisionActiva = null;
+
+    function limpiarError() {
+      if (!mensajeError) return;
+      mensajeError.textContent = '';
+      mensajeError.classList.remove('visible', 'error');
+    }
+
+    function elegirDivision(division) {
+      if (!MENSAJES_DIVISION[division]) return;
+      divisionActiva = division;
+      limpiarError();
+
+      botonesDivision.forEach(function (btn) {
+        var activo = btn.getAttribute('data-division') === division;
+        btn.setAttribute('aria-pressed', activo ? 'true' : 'false');
+      });
+
+      var primerCampo = null;
+      gruposCampos.forEach(function (grupo) {
+        var esEsta = grupo.getAttribute('data-campos') === division;
+        grupo.hidden = !esEsta;
+        grupo.querySelectorAll('select, input, textarea').forEach(function (campo) {
+          campo.disabled = !esEsta;
+          if (esEsta && !primerCampo) primerCampo = campo;
+        });
+      });
+      if (primerCampo) primerCampo.focus();
+    }
+
+    botonesDivision.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        elegirDivision(btn.getAttribute('data-division'));
+      });
+    });
 
     formulario.addEventListener('submit', function (evento) {
       evento.preventDefault();
 
-      var servicio = formulario.querySelector('#cot-servicio');
-      var nombre = formulario.querySelector('#cot-nombre');
-      var empresa = formulario.querySelector('#cot-empresa');
-      var ciudad = formulario.querySelector('#cot-ciudad');
-      var detalle = formulario.querySelector('#cot-detalle');
-
-      if (!nombre.value.trim() || !servicio.value) {
+      if (!divisionActiva) {
         if (mensajeError) {
-          mensajeError.textContent = 'Por favor completa al menos tu nombre y el servicio de interés.';
+          mensajeError.textContent = 'Selecciona primero qué necesitas: Energía Solar o Mantenimiento.';
           mensajeError.classList.add('visible', 'error');
         }
+        if (botonesDivision[0]) botonesDivision[0].focus();
+        return;
+      }
+      if (!nombre || !nombre.value.trim()) {
+        if (mensajeError) {
+          mensajeError.textContent = 'Por favor escribe tu nombre.';
+          mensajeError.classList.add('visible', 'error');
+        }
+        if (nombre) nombre.focus();
         return;
       }
 
-      var lineas = [
-        'Hola NODIA, quiero solicitar una cotización.',
-        'Servicio: ' + servicio.value,
-        'Nombre: ' + nombre.value.trim()
-      ];
-      if (empresa.value.trim()) lineas.push('Empresa: ' + empresa.value.trim());
-      if (ciudad.value.trim()) lineas.push('Ciudad: ' + ciudad.value.trim());
-      if (detalle.value.trim()) lineas.push('Detalle: ' + detalle.value.trim());
+      var campos = { nombre: nombre.value.trim() };
+      formulario.querySelectorAll('[data-campos="' + divisionActiva + '"] select, [data-campos="' + divisionActiva + '"] input').forEach(function (campo) {
+        if (campo.value && campo.value.trim) campos[campo.name] = campo.value.trim();
+      });
 
-      var texto = encodeURIComponent(lineas.join('\n'));
+      limpiarError();
+      var texto = encodeURIComponent(MENSAJES_DIVISION[divisionActiva](campos));
       var url = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + texto;
-
       window.open(url, '_blank', 'noopener');
     });
+
+    var parametroDefecto = formulario.getAttribute('data-division-defecto-param');
+    var divisionDesdeUrl = parametroDefecto
+      ? new URLSearchParams(window.location.search).get(parametroDefecto)
+      : null;
+    if (divisionDesdeUrl && MENSAJES_DIVISION[divisionDesdeUrl]) elegirDivision(divisionDesdeUrl);
   }
 
   function iniciarRevelado() {
@@ -74,6 +133,8 @@
       '.encabezado-seccion',
       '.subhero > .contenedor > *',
       '.bento-servicios > *',
+      '.divisiones-grid > *',
+      '.indice-division',
       '.galeria-grid > *',
       '.grid-proceso > *',
       '.cotizador-intro',
