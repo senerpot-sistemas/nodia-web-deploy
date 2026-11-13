@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /validar.html
+Disallow: /expo.html
+Allow: /
+
+Sitemap: https://nodia.com.co/sitemap.xml
