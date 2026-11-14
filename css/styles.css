@@ -1154,3 +1154,129 @@ textarea:focus-visible {
 @media (max-width: 560px) {
   .lista-indice-servicios a { flex-direction: column; gap: 4px; }
 }
+
+/* ---------- Portada: hero panorámico industrial (Inicio) ---------- */
+.hero-industrial {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+  overflow: hidden;
+  background: #06263F;
+}
+.hero-industrial img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  z-index: 0;
+}
+.hero-industrial::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(6,38,63,.95) 10%, rgba(6,38,63,.74) 42%, rgba(11,61,98,.28) 78%);
+  z-index: 1;
+}
+.hero-industrial__contenido {
+  position: relative;
+  z-index: 2;
+  padding: 64px clamp(24px, 6vw, 80px) 76px;
+  max-width: 840px;
+}
+.hero-industrial .etiqueta { color: var(--verde-energia); }
+.hero-industrial h1 {
+  color: #fff;
+  font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+  font-weight: 800;
+  letter-spacing: -.01em;
+  max-width: 15ch;
+  margin: 0;
+}
+.hero-industrial h1 em { font-style: normal; color: var(--verde-energia); }
+.hero-industrial p.lead {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 400;
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: #D7E2EA;
+  max-width: 54ch;
+  margin-top: 18px;
+}
+@media (max-width: 760px) {
+  .hero-industrial { min-height: 78vh; }
+  .hero-industrial__contenido { padding: 40px 22px 44px; }
+  .hero-industrial h1 { max-width: none; }
+}
+
+/* ---------- Especialidades: bloques grandes alternados ---------- */
+.bloques-especialidad {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.bloque-especialidad {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 48px;
+  align-items: center;
+}
+.bloque-especialidad__media {
+  position: relative;
+  border-radius: var(--radio);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+.bloque-especialidad__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.bloque-especialidad__texto { position: relative; padding-left: 28px; }
+.bloque-especialidad__texto::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 2px; bottom: 2px;
+  width: 4px;
+}
+.bloque-especialidad--solar .bloque-especialidad__texto::before { background: var(--verde-energia); }
+.bloque-especialidad--mantenimiento .bloque-especialidad__texto::before { background: var(--azul-tecnico); }
+.bloque-especialidad__texto h3 {
+  font-family: var(--fuente-titulos);
+  font-weight: 800;
+  font-size: 1.9rem;
+  letter-spacing: -.01em;
+  color: var(--azul-nodia);
+  margin: 0 0 12px;
+}
+.bloque-especialidad__texto p { color: var(--gris-medio); font-size: 1.02rem; max-width: 46ch; margin-bottom: 0; }
+.bloque-especialidad__texto ul { margin: 18px 0 24px; display: flex; flex-direction: column; gap: 10px; }
+.bloque-especialidad__texto li { display: flex; gap: 10px; font-size: .95rem; color: var(--grafito); }
+.bloque-especialidad__texto li::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--verde-energia);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+.bloque-especialidad--mantenimiento .bloque-especialidad__texto li::before { background: var(--azul-tecnico); }
+@media (max-width: 860px) {
+  .bloque-especialidad { grid-template-columns: 1fr; gap: 24px; }
+  .bloque-especialidad__media { order: -1; aspect-ratio: 16 / 10; }
+}
+
+/* ---------- Trabajos destacados (Inicio, antes del cotizador) ---------- */
+.trabajos-destacados {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.trabajos-destacados .bento-foto { grid-column: auto; min-height: 320px; }
+@media (max-width: 860px) {
+  .trabajos-destacados { grid-template-columns: 1fr; }
+}
