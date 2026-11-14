@@ -75,8 +75,9 @@
 <main id="contenido">
 
   <!-- HERO -->
-  <section class="hero-nuevo">
-    <div class="hero-nuevo__panel hero-entrada">
+  <section class="hero-industrial">
+    <img src="img/hero-industrial-portada.jpg" alt="" loading="eager">
+    <div class="contenedor hero-industrial__contenido hero-entrada">
       <span class="etiqueta">Ingeniería eléctrica &amp; energía</span>
       <h1>Soluciones que mantienen tu <em>energía</em> en movimiento</h1>
       <p class="lead">Ingeniería eléctrica para su infraestructura: mantenimiento especializado de subestaciones y transformadores, y energía solar fotovoltaica, con cumplimiento RETIE en cada proyecto.</p>
@@ -90,10 +91,6 @@
         <div class="hero-dato"><strong>Un solo aliado</strong><span>Mantenimiento y energía solar</span></div>
       </div>
     </div>
-    <div class="hero-nuevo__media hero-entrada hero-entrada--retraso">
-      <img src="img/trabajo-solar.jpg" alt="Instalación de paneles solares en cubierta, ejecutada por el equipo técnico de NODIA" loading="eager">
-      <p class="hero-nuevo__caption">Instalación fotovoltaica ejecutada por nuestro equipo técnico</p>
-    </div>
   </section>
 
   <!-- ESPECIALIDADES -->
@@ -104,32 +101,79 @@
         <h2>Dos frentes, un mismo equipo técnico</h2>
         <p>Mantenimiento eléctrico especializado y energía solar fotovoltaica, con la misma trazabilidad técnica en cada proyecto.</p>
       </div>
-      <div class="divisiones-grid">
+      <div class="bloques-especialidad">
 
-        <a class="division-card division-card--solar" href="energia-solar.html" aria-label="Ver servicios de Energía Solar Fotovoltaica">
-          <div class="division-card__media">
-            <img src="img/trabajo-solar.jpg" alt="" loading="lazy">
-            <span class="division-card__numero" aria-hidden="true">01</span>
+        <div class="bloque-especialidad bloque-especialidad--solar">
+          <div class="bloque-especialidad__media">
+            <img src="img/trabajo-solar.jpg" alt="Instalación de paneles solares fotovoltaicos en cubierta" loading="lazy">
           </div>
-          <div class="division-card__texto">
-            <h3>Energía Solar Fotovoltaica</h3>
+          <div class="bloque-especialidad__texto">
+            <span class="etiqueta">Energía Solar Fotovoltaica</span>
+            <h3>Un proceso técnico de principio a fin</h3>
             <p>Diseño e instalación de sistemas solares conectados a la red para reducir el consumo de energía convencional.</p>
-            <span class="ver-mas">Ver más →</span>
+            <ul>
+              <li>Diseño del sistema fotovoltaico según las necesidades del proyecto</li>
+              <li>Instalación y puesta en marcha del sistema conectado a la red</li>
+              <li>Acompañamiento en los trámites de conexión ante el operador de red</li>
+            </ul>
+            <a href="energia-solar.html" class="btn btn--contorno">Ver página de Energía Solar →</a>
           </div>
-        </a>
+        </div>
 
-        <a class="division-card division-card--mantenimiento" href="mantenimiento.html" aria-label="Ver servicios de Mantenimiento Eléctrico">
-          <div class="division-card__media">
-            <img src="img/trabajo-subestacion.jpg" alt="" loading="lazy">
-            <span class="division-card__numero" aria-hidden="true">02</span>
-          </div>
-          <div class="division-card__texto">
-            <h3>Mantenimiento Eléctrico Especializado</h3>
+        <div class="bloque-especialidad bloque-especialidad--mantenimiento">
+          <div class="bloque-especialidad__texto">
+            <span class="etiqueta" style="color:var(--azul-tecnico);">Mantenimiento Eléctrico Especializado</span>
+            <h3>Preventivo, correctivo y con trazabilidad completa</h3>
             <p>Mantenimiento preventivo y correctivo de subestaciones, transformadores y sistemas eléctricos, con cumplimiento RETIE.</p>
-            <span class="ver-mas">Ver más →</span>
+            <ul>
+              <li>Mantenimiento integral a subestaciones eléctricas de media tensión</li>
+              <li>Pruebas eléctricas especializadas a transformadores</li>
+              <li>Puesta a tierra y pararrayos conforme a normativa</li>
+            </ul>
+            <a href="mantenimiento.html" class="btn btn--contorno">Ver página de Mantenimiento Eléctrico →</a>
           </div>
-        </a>
+          <div class="bloque-especialidad__media">
+            <img src="img/trabajo-subestacion.jpg" alt="Inspección de subestación eléctrica de media tensión" loading="lazy">
+          </div>
+        </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- TRABAJOS DESTACADOS -->
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="encabezado-seccion centrado">
+        <span class="etiqueta">Trabajo real, resultados reales</span>
+        <h2>Así se ve nuestro trabajo en campo</h2>
+        <p>Fotografías propias de subestaciones, transformadores y energía solar — evidencia real de cada trabajo ejecutado.</p>
+      </div>
+      <div class="trabajos-destacados">
+        <figure class="bento-foto">
+          <img src="img/trabajo-subestacion.jpg" alt="Inspección de subestación eléctrica de media tensión" loading="lazy">
+          <figcaption>
+            <span class="etiqueta">Mantenimiento · Región Caribe</span>
+            <h3>Inspección de subestación de media tensión</h3>
+          </figcaption>
+        </figure>
+        <figure class="bento-foto">
+          <img src="img/trabajo-pruebas-transformador.jpg" alt="Prueba eléctrica de resistencia de aislamiento a un transformador" loading="lazy">
+          <figcaption>
+            <span class="etiqueta">Mantenimiento · Región Caribe</span>
+            <h3>Pruebas eléctricas a transformador</h3>
+          </figcaption>
+        </figure>
+        <figure class="bento-foto">
+          <img src="img/trabajo-solar.jpg" alt="Instalación de paneles solares en cubierta" loading="lazy">
+          <figcaption>
+            <span class="etiqueta">Energía Solar · Región Caribe</span>
+            <h3>Instalación fotovoltaica en cubierta</h3>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="hero-acciones" style="justify-content:center; margin-top:28px;">
+        <a href="proyectos.html" class="btn btn--oscuro">Ver todos los proyectos →</a>
       </div>
     </div>
   </section>
@@ -253,34 +297,6 @@
         <span class="chip-normativa">RETIE</span>
         <span class="chip-normativa">RETILAP</span>
         <span class="chip-normativa">NTC 2050</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROYECTOS -->
-  <section class="seccion">
-    <div class="contenedor">
-      <div class="encabezado-seccion centrado">
-        <span class="etiqueta">Trabajo real, resultados reales</span>
-        <h2>Así se ve nuestro trabajo en campo</h2>
-        <p>Fotografías propias de subestaciones, transformadores y energía solar — evidencia real de cada trabajo ejecutado.</p>
-      </div>
-      <div class="galeria-grid">
-        <figure class="galeria-item">
-          <img src="img/trabajo-subestacion.jpg" alt="Inspección de subestación eléctrica de media tensión" loading="lazy">
-          <figcaption>Inspección de subestación de media tensión</figcaption>
-        </figure>
-        <figure class="galeria-item">
-          <img src="img/trabajo-pruebas-transformador.jpg" alt="Prueba eléctrica de resistencia de aislamiento a un transformador" loading="lazy">
-          <figcaption>Pruebas eléctricas a transformador</figcaption>
-        </figure>
-        <figure class="galeria-item">
-          <img src="img/trabajo-solar.jpg" alt="Instalación de paneles solares en cubierta" loading="lazy">
-          <figcaption>Instalación fotovoltaica en cubierta</figcaption>
-        </figure>
-      </div>
-      <div class="hero-acciones" style="justify-content:center; margin-top:28px;">
-        <a href="proyectos.html" class="btn btn--oscuro">Ver todos los proyectos →</a>
       </div>
     </div>
   </section>
