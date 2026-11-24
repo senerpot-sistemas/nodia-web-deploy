@@ -5,5 +5,5 @@ const CONFIG = {
   nodiaKey: '4589c62d-ea74-4dcd-88ef-0946039489ad',
   campoUrl: 'https://script.google.com/macros/s/AKfycbwptSjMvqM-_VylWPoZ1EbvydmUFhUFPN-ggCL3hOySuBvhVdCGM0xhSvacctmBfEwq/exec',
   campoKey: 'CAMPO-1bcd18ca9e571b6809a35833',
-  version: '1.0.0'
+  version: '1.0.1'
 };

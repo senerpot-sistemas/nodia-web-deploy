@@ -222,6 +222,30 @@ function barraPresupuesto(c) {
     '<div class="presu-barra"><div class="presu-relleno ' + c.nivel + '" style="width:' + ancho + '%"></div></div>' + alerta + '</div>';
 }
 
+// ─────────────────────────── Instalar la app en el celular ───────────────────────────
+// Chrome (Android) avisa con «beforeinstallprompt» cuando deja instalar: se guarda para ofrecer un botón propio,
+// porque el aviso automático del navegador no siempre aparece. En iPhone no existe ese aviso: se explica el camino.
+const Instalar = { evento: null };
+const yaInstalada = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt', (ev) => { ev.preventDefault(); Instalar.evento = ev; renderSuave(); });
+window.addEventListener('appinstalled', () => { Instalar.evento = null; aviso('App instalada. Búsquela en la pantalla de inicio.'); renderSuave(); });
+function bloqueInstalar() {
+  if (yaInstalada()) return '';
+  if (Instalar.evento) return '<button class="btn exito grande" type="button" data-accion="instalar">📲 Instalar la app en este celular</button>';
+  const ua = navigator.userAgent;
+  if (/FBAN|FBAV|Instagram|WhatsApp|Line\//i.test(ua)) return '<div class="nota">📲 Para instalarla, ábrala en el navegador del celular: toque los tres puntos y elija «Abrir en Chrome» (o «Abrir en Safari»).</div>';
+  if (/iPhone|iPad|iPod/.test(ua)) return '<div class="nota">📲 <b>Para instalarla en iPhone:</b> ábrala en Safari, toque <b>Compartir</b> (el cuadro con la flecha hacia arriba) y luego <b>«Agregar a inicio»</b>.</div>';
+  if (/Android/.test(ua)) return '<div class="nota">📲 <b>Para instalarla:</b> toque los tres puntos <b>⋮</b> de Chrome (arriba a la derecha) y luego <b>«Instalar app»</b> o <b>«Agregar a pantalla principal»</b>.</div>';
+  return '';
+}
+async function instalarApp() {
+  const ev = Instalar.evento;
+  if (!ev) return;
+  Instalar.evento = null;
+  try { ev.prompt(); await ev.userChoice; } catch (e) { console.warn('No se pudo abrir la instalación', e); }
+  render();
+}
+
 // ─────────────────────────── 1. Ingreso ───────────────────────────
 function vistaIngreso() {
   const ajenos = Cola.items.length;
@@ -235,7 +259,7 @@ function vistaIngreso() {
     (prueba ? '<p class="nota-cola centro"><b>Sitio de PRUEBA.</b> Use solo los usuarios de prueba. <b>No escriba su contraseña real de NODIA.</b></p>'
       : '<p class="tenue centro">Use el mismo usuario y contraseña de NODIA. Para ingresar necesita conexión; después puede trabajar sin señal.</p>') +
     (ajenos ? '<p class="nota-cola">📱 Este teléfono tiene ' + ajenos + ' registro(s) sin enviar. Se enviarán cuando ingrese quien los hizo.</p>' : '') +
-    '</form>' + (CONFIG.entorno ? '<p class="ingreso-entorno">' + h(CONFIG.entorno) + ' · v' + h(CONFIG.version) + '</p>' : '') + '</div>';
+    '</form>' + bloqueInstalar() + (CONFIG.entorno ? '<p class="ingreso-entorno">' + h(CONFIG.entorno) + ' · v' + h(CONFIG.version) + '</p>' : '') + '</div>';
 }
 async function ingresar(form) {
   const boton = $('#in-boton');
@@ -768,7 +792,7 @@ function vistaCuenta() {
     '<tr><td>Versión</td><td>' + h(CONFIG.version) + (CONFIG.entorno ? ' · ' + h(CONFIG.entorno) : '') + '</td></tr></table></div>' +
     '<button class="btn primario grande" data-accion="refrescar">↻ Actualizar datos</button>' +
     '<button class="btn plano grande" data-accion="salir">Cerrar sesión</button>' +
-    '<p class="tenue centro">Para instalarla: en el menú del navegador elija «Agregar a la pantalla de inicio».</p></main>' + barraInferior('cuenta');
+    bloqueInstalar() + '</main>' + barraInferior('cuenta');
 }
 async function salir() {
   const n = Cola.porEnviar().length;
@@ -886,6 +910,7 @@ document.addEventListener('click', async (ev) => {
       break;
     }
     case 'salir': salir(); break;
+    case 'instalar': instalarApp(); break;
     case 'salir-directo': claveReciente = ''; try { await API.nodia('logout', {}); } catch (e) { /* se cierra igual en el teléfono */ } cerrarSesionLocal(); break;
     case 'ajuste-aprobacion': {
       const exigir = !conAprobacion();
