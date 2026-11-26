@@ -207,7 +207,10 @@ function barraSuperior(titulo, atras) {
 function barraInferior(activa) {
   const n = Cola.mios().length;
   const item = (ruta, icono, texto, extra) => '<a href="#/' + ruta + '" class="' + (activa === ruta ? 'activa' : '') + '"><span class="nav-icono">' + icono + '</span><span>' + texto + '</span>' + (extra || '') + '</a>';
-  return '<nav class="nav">' + item('proyectos', '📋', 'Proyectos') + item('pendientes', '⏫', 'Por enviar', n ? '<b class="globo">' + n + '</b>' : '') +
+  // Dentro de la app Android, «Fotos» abre todas las carpetas del teléfono: las de los proyectos y las sueltas
+  // (una visita, una cotización, una prueba) que la persona crea sin que exista un proyecto en NODIA.
+  const fotos = enAppNativa() ? '<button type="button" data-accion="fotos-todas"><span class="nav-icono">📷</span><span>Fotos</span></button>' : '';
+  return '<nav class="nav">' + item('proyectos', '📋', 'Proyectos') + fotos + item('pendientes', '⏫', 'Por enviar', n ? '<b class="globo">' + n + '</b>' : '') +
     (esAdmin() ? item('admin', '🛠️', 'Administrar') : '') + item('cuenta', '👤', 'Cuenta') + '</nav>';
 }
 function chipEstado(estado, porEnviar) {
@@ -227,10 +230,12 @@ function barraPresupuesto(c) {
 // porque el aviso automático del navegador no siempre aparece. En iPhone no existe ese aviso: se explica el camino.
 const Instalar = { evento: null };
 const yaInstalada = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+/** ¿Estas pantallas corren dentro de la app Android de NODIA Campo? (ella expone el objeto NodiaNativo: fotos en el teléfono). */
+const enAppNativa = () => typeof window.NodiaNativo !== 'undefined';
 window.addEventListener('beforeinstallprompt', (ev) => { ev.preventDefault(); Instalar.evento = ev; renderSuave(); });
 window.addEventListener('appinstalled', () => { Instalar.evento = null; aviso('App instalada. Búsquela en la pantalla de inicio.'); renderSuave(); });
 function bloqueInstalar() {
-  if (yaInstalada()) return '';
+  if (yaInstalada() || enAppNativa()) return '';
   if (Instalar.evento) return '<button class="btn exito grande" type="button" data-accion="instalar">📲 Instalar la app en este celular</button>';
   const ua = navigator.userAgent;
   if (/FBAN|FBAV|Instagram|WhatsApp|Line\//i.test(ua)) return '<div class="nota">📲 Para instalarla, ábrala en el navegador del celular: toque los tres puntos y elija «Abrir en Chrome» (o «Abrir en Safari»).</div>';
@@ -398,7 +403,8 @@ function vistaProyecto(id) {
     '<div class="tarjeta"><div class="tenue">' + h(p.cliente) + ' · ' + h(p.idProyecto) + '</div>' +
     '<div class="proyecto-linea">' + chipEstado(ev.estado, ev.porEnviar) + '<span class="tenue">' + (p.fechaInicio ? 'Inició ' + h(p.fechaInicio) : 'Sin iniciar') + '</span></div>' +
     (p.notas ? '<div class="nota">📝 ' + h(p.notas) + '</div>' : '') + terminado +
-    (botones ? '<div class="acciones">' + botones + '</div>' : '') + '</div>' +
+    (botones ? '<div class="acciones">' + botones + '</div>' : '') +
+    (enAppNativa() ? '<button class="btn primario grande" data-accion="fotos" data-id="' + h(p.idProyecto) + '">📷 Fotos del proyecto</button>' : '') + '</div>' +
 
     '<div class="tarjeta"><h2>Resumen</h2>' + barraPresupuesto(c) +
     '<table class="cifras">' +
@@ -790,6 +796,7 @@ function vistaCuenta() {
     '<tr><td>Sesión válida hasta</td><td>' + (s.expiraEn ? h(horaLegible(new Date(s.expiraEn))) : '—') + '</td></tr>' +
     '<tr><td>Última actualización</td><td>' + (E.ultimaSync ? h(horaLegible(new Date(E.ultimaSync))) : '—') + '</td></tr>' +
     '<tr><td>Versión</td><td>' + h(CONFIG.version) + (CONFIG.entorno ? ' · ' + h(CONFIG.entorno) : '') + '</td></tr></table></div>' +
+    (enAppNativa() ? '<button class="btn primario grande" data-accion="fotos-todas">📷 Todas las fotos y carpetas sueltas</button>' : '') +
     '<button class="btn primario grande" data-accion="refrescar">↻ Actualizar datos</button>' +
     '<button class="btn plano grande" data-accion="salir">Cerrar sesión</button>' +
     bloqueInstalar() + '</main>' + barraInferior('cuenta');
@@ -911,6 +918,13 @@ document.addEventListener('click', async (ev) => {
     }
     case 'salir': salir(); break;
     case 'instalar': instalarApp(); break;
+    case 'fotos': {
+      // Las fotos NO pasan por internet: la app Android las guarda en el teléfono, en la carpeta de este proyecto.
+      const p = E.proyectos.find((x) => x.idProyecto === d.id);
+      if (p && enAppNativa()) window.NodiaNativo.abrirFotos(String(p.idProyecto), String(p.nombre || ''));
+      break;
+    }
+    case 'fotos-todas': if (enAppNativa()) window.NodiaNativo.abrirTodas(); break;
     case 'salir-directo': claveReciente = ''; try { await API.nodia('logout', {}); } catch (e) { /* se cierra igual en el teléfono */ } cerrarSesionLocal(); break;
     case 'ajuste-aprobacion': {
       const exigir = !conAprobacion();

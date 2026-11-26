@@ -1,11 +1,11 @@
 // NODIA Campo — service worker: hace que la APP abra sin señal.
 // Solo guarda los archivos de la app (pantallas, estilos, íconos). Las llamadas a NODIA y a Campo
 // (…/exec) nunca pasan por aquí ni se guardan: los datos sin conexión los maneja la cola de la app.
-const VERSION = 'campo-v20261123e';
+const VERSION = 'campo-v20261126b';
 const ARCHIVOS = [
   './', 'index.html', 'manifest.webmanifest',
-  'css/app.css?v=20261123e',
-  'js/config.js?v=20261123e', 'js/almacen.js?v=20261123e', 'js/api.js?v=20261123e', 'js/cola.js?v=20261123e', 'js/app.js?v=20261123e',
+  'css/app.css?v=20261126b',
+  'js/config.js?v=20261126b', 'js/almacen.js?v=20261126b', 'js/api.js?v=20261126b', 'js/cola.js?v=20261126b', 'js/app.js?v=20261126b',
   'img/nodia-symbol.png', 'img/favicon-32.png', 'img/icono-180.png', 'img/icono-192.png', 'img/icono-512.png',
   'fonts/montserrat-600.woff2', 'fonts/montserrat-700.woff2', 'fonts/montserrat-800.woff2',
   'fonts/sourcesans3-400.woff2', 'fonts/sourcesans3-600.woff2', 'fonts/sourcesans3-700.woff2'
