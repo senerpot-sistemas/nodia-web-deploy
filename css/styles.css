@@ -712,6 +712,18 @@ textarea:focus-visible {
 .footer-grid a:hover { color: var(--verde-energia); }
 .footer-marca p { max-width: 280px; }
 
+.footer-social { display: flex; gap: 10px; margin-top: 16px; }
+.footer-social a {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .2s;
+}
+.footer-social a:hover { background: var(--verde-energia); transform: translateY(-2px); }
+.footer-social svg { width: 18px; height: 18px; fill: #C7D3DC; }
+.footer-social a:hover svg { fill: #fff; }
+
 .footer-barra {
   display: flex;
   justify-content: space-between;
@@ -914,6 +926,16 @@ textarea:focus-visible {
 .info-item h3 { font-size: .95rem; margin-bottom: 2px; }
 .info-item p { margin: 0; color: var(--gris-medio); font-size: .92rem; }
 .info-item a { color: var(--azul-tecnico); font-weight: 600; }
+.info-item .redes-inline { display: flex; gap: 10px; margin-top: 6px; }
+.info-item .redes-inline a {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--gris-claro);
+  display: flex; align-items: center; justify-content: center;
+}
+.info-item .redes-inline a:hover { background: var(--verde-energia); }
+.info-item .redes-inline svg { width: 18px; height: 18px; fill: var(--azul-tecnico); }
+.info-item .redes-inline a:hover svg { fill: #fff; }
 
 .sr-only {
   position: absolute;
