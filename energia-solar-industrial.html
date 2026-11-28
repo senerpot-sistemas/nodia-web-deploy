@@ -45,7 +45,7 @@
   "@type": "Service",
   "serviceType": "Energía solar fotovoltaica para empresas e industrias",
   "name": "Energía Solar Industrial",
-  "description": "Diseño e instalación de sistemas fotovoltaicos de autoconsumo para empresas e industrias, con acompañamiento técnico desde el diseño hasta la puesta en marcha, conforme a los lineamientos de RETIE.",
+  "description": "Diseño e instalación de sistemas fotovoltaicos de autoconsumo para empresas e industrias, incluyendo estudio de viabilidad con simulación en PVsyst (generación estimada, pérdidas energéticas, dimensionamiento y análisis de viabilidad económica), con acompañamiento técnico desde el diseño hasta la puesta en marcha, conforme a los lineamientos de RETIE.",
   "provider": {
     "@type": "LocalBusiness",
     "name": "NODIA",
@@ -78,6 +78,11 @@
       "@type": "Question",
       "name": "¿Qué incluye el servicio de diseño e instalación?",
       "acceptedAnswer": { "@type": "Answer", "text": "Evaluación del consumo y el espacio disponible, diseño del sistema, instalación de paneles y equipos, y puesta en marcha, conforme a los lineamientos de RETIE aplicables a instalaciones fotovoltaicas." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué es PVsyst y para qué lo usan?",
+      "acceptedAnswer": { "@type": "Answer", "text": "PVsyst es un software de referencia en la industria fotovoltaica para simular el comportamiento de un sistema solar antes de instalarlo: generación estimada, pérdidas energéticas y dimensionamiento de equipos, entre otros factores. Es una herramienta de estimación — el desempeño real del sistema instalado puede variar según las condiciones de operación." }
     },
     {
       "@type": "Question",
@@ -185,6 +190,59 @@
   <section class="seccion seccion--claro">
     <div class="contenedor">
       <div class="encabezado-seccion">
+        <span class="etiqueta">Diferenciador técnico</span>
+        <h2>Estudio de viabilidad con PVsyst</h2>
+        <p>Utilizamos PVsyst, software de referencia en la industria fotovoltaica, para simular el comportamiento del sistema antes de instalarlo. Según el alcance contratado, la evaluación puede contemplar:</p>
+      </div>
+      <div class="valores-grid valores-grid--3">
+        <div class="valor-card">
+          <div class="icono-servicio">01</div>
+          <h3>Análisis del consumo eléctrico</h3>
+          <p>Revisión del perfil de consumo de la empresa como base del dimensionamiento.</p>
+        </div>
+        <div class="valor-card">
+          <div class="icono-servicio">02</div>
+          <h3>Simulación de generación (PVsyst)</h3>
+          <p>Modelado del comportamiento del sistema según ubicación, orientación y condiciones del sitio.</p>
+        </div>
+        <div class="valor-card">
+          <div class="icono-servicio">03</div>
+          <h3>Evaluación de pérdidas energéticas</h3>
+          <p>Estimación de pérdidas por sombreado, temperatura, cableado y otros factores del sistema.</p>
+        </div>
+        <div class="valor-card">
+          <div class="icono-servicio">04</div>
+          <h3>Dimensionamiento de módulos e inversores</h3>
+          <p>Selección de equipos según el consumo evaluado y el espacio disponible.</p>
+        </div>
+        <div class="valor-card">
+          <div class="icono-servicio">05</div>
+          <h3>Estimación de generación anual</h3>
+          <p>Proyección de energía generada a partir del modelo simulado — es una estimación, no un resultado garantizado.</p>
+        </div>
+        <div class="valor-card">
+          <div class="icono-servicio">06</div>
+          <h3>Evaluación del autoconsumo</h3>
+          <p>Análisis de qué proporción de la generación coincide con el consumo real de la empresa.</p>
+        </div>
+        <div class="valor-card">
+          <div class="icono-servicio">07</div>
+          <h3>Análisis de viabilidad económica</h3>
+          <p>Evaluación de la inversión requerida frente al comportamiento estimado del sistema.</p>
+        </div>
+        <div class="valor-card">
+          <div class="icono-servicio">08</div>
+          <h3>Evaluación de recuperación de inversión</h3>
+          <p>Estimación del plazo de recuperación según los supuestos del estudio — una proyección sujeta a las condiciones reales de operación, no una cifra garantizada.</p>
+        </div>
+      </div>
+      <p style="margin-top:16px;color:var(--gris-medio);font-size:0.92rem;">Las simulaciones son estimaciones basadas en los datos de entrada y las condiciones modeladas. El desempeño real del sistema puede variar según las condiciones de operación; no garantizamos cifras de ahorro ni de retorno de inversión.</p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="encabezado-seccion">
         <span class="etiqueta">Alcance técnico</span>
         <h2>Servicios que ofrecemos</h2>
         <p>Trabajamos con empresas e industrias en techo, estructura o terreno disponible. El dimensionamiento se define según el consumo y el espacio de cada proyecto.</p>
@@ -203,7 +261,7 @@
         <div class="valor-card">
           <div class="icono-servicio">03</div>
           <h3>Instalación</h3>
-          <p>Montaje de paneles, estructura e inversores, con el equipo desenergizado durante las conexiones eléctricas.</p>
+          <p>Montaje de paneles, estructura e inversores bajo protocolos de seguridad específicos para circuitos fotovoltaicos DC y AC — los módulos pueden generar tensión al recibir irradiación solar incluso estando desconectados de la red, por lo que las conexiones se realizan con los procedimientos de seguridad correspondientes a cada etapa.</p>
         </div>
         <div class="valor-card">
           <div class="icono-servicio">04</div>
@@ -339,6 +397,10 @@
         <details class="faq-item">
           <summary>¿Qué incluye el servicio de diseño e instalación?</summary>
           <p>Evaluación del consumo y el espacio disponible, diseño del sistema, instalación de paneles y equipos, y puesta en marcha, conforme a los lineamientos de RETIE aplicables a instalaciones fotovoltaicas.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué es PVsyst y para qué lo usan?</summary>
+          <p>PVsyst es un software de referencia en la industria fotovoltaica para simular el comportamiento de un sistema solar antes de instalarlo: generación estimada, pérdidas energéticas y dimensionamiento de equipos, entre otros factores. Es una herramienta de estimación — el desempeño real del sistema instalado puede variar según las condiciones de operación.</p>
         </details>
         <details class="faq-item">
           <summary>¿El sistema requiere mantenimiento después de instalado?</summary>
