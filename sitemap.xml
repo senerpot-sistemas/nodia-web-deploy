@@ -50,4 +50,34 @@
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://nodia.com.co/conocimiento-tecnico.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nodia.com.co/cuando-necesita-mantenimiento-una-subestacion.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nodia.com.co/que-pruebas-diagnostican-un-transformador.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nodia.com.co/como-reducir-el-riesgo-de-paradas-electricas-industriales.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nodia.com.co/que-evaluar-antes-de-invertir-en-energia-solar.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nodia.com.co/como-afectan-los-problemas-de-calidad-de-energia-a-una-industria.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
