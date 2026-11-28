@@ -30,6 +30,32 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
+  function registrarEvento(nombre, parametros) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', nombre, parametros || {});
+    }
+  }
+
+  function iniciarEventosDeContacto() {
+    document.addEventListener('click', function (evento) {
+      var enlace = evento.target.closest ? evento.target.closest('a[href]') : null;
+      if (!enlace) return;
+      var href = enlace.getAttribute('href') || '';
+
+      if (href.indexOf('tel:') === 0) {
+        registrarEvento('click_phone', { enlace: href });
+      } else if (href.indexOf('mailto:') === 0) {
+        registrarEvento('click_email', { enlace: href });
+      } else if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
+        registrarEvento('click_whatsapp', { enlace: href });
+      } else if (href.indexOf('facebook.com') !== -1) {
+        registrarEvento('click_facebook', { enlace: href });
+      } else if (href.indexOf('instagram.com') !== -1) {
+        registrarEvento('click_instagram', { enlace: href });
+      }
+    });
+  }
+
   var MENSAJES_DIVISION = {
     solar: function (campos) {
       var l = ['Hola, soy ' + campos.nombre + '. Necesito información sobre Energía Solar.'];
@@ -66,6 +92,7 @@
       if (!MENSAJES_DIVISION[division]) return;
       divisionActiva = division;
       limpiarError();
+      registrarEvento('cotizador_inicio', { division: division });
 
       botonesDivision.forEach(function (btn) {
         var activo = btn.getAttribute('data-division') === division;
@@ -118,6 +145,7 @@
       limpiarError();
       var texto = encodeURIComponent(MENSAJES_DIVISION[divisionActiva](campos));
       var url = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + texto;
+      registrarEvento('generate_lead', { division: divisionActiva, metodo: 'cotizador_whatsapp' });
       window.open(url, '_blank', 'noopener');
     });
 
@@ -177,5 +205,6 @@
     marcarAnioFooter();
     iniciarCotizador();
     iniciarRevelado();
+    iniciarEventosDeContacto();
   });
 })();
