@@ -143,9 +143,12 @@
       });
 
       limpiarError();
+      registrarEvento('cotizador_completado', { division: divisionActiva });
       var texto = encodeURIComponent(MENSAJES_DIVISION[divisionActiva](campos));
       var url = 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + texto;
-      registrarEvento('generate_lead', { division: divisionActiva, metodo: 'cotizador_whatsapp' });
+      // Apertura de WhatsApp: intención comercial verificada, no un lead confirmado.
+      // "generate_lead" se reserva para una solicitud efectivamente recibida/confirmada.
+      registrarEvento('cotizador_whatsapp', { division: divisionActiva });
       window.open(url, '_blank', 'noopener');
     });
 
